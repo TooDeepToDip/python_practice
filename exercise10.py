@@ -43,6 +43,22 @@ for tester in ( t, b ):
         elapsed, result = tester(fn, 2, _reps=10000)
         print('function %-9s: elapsed %.9f => [%s]' % ( fn.__name__, elapsed, result))
 
+seq = list(range(1000))
+dictGen = lambda x: { i: i for i in x }
+def dictGen2(x):
+    d = {}
+    for i in x:
+        d[i] = i
+    return d
+
+print('---dict construction---')
+for tester in ( t, b ):
+    print('\n')
+    print('<%s>' % tester.__name__)
+    for fn in ( dictGen, dictGen2):
+        elapsed, result = tester(fn, seq, _reps=10000)
+        print('function %-9s: elapsed %.9f => [%s ... %s]' % ( fn.__name__, elapsed, result[list(result.keys())[0]], result[list(result.keys())[-1]]))
+
 #print(timer(math.sqrt, 2))
 #print(timer(lambda x,y: x ** y, 2, 0.5))
 #print(timer(pow, 2, 0.5))
